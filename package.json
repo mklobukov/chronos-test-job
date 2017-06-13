@@ -1,0 +1,11 @@
+{
+  "name": "test_chronos_job",
+  "version": "1.0.0",
+  "description": "test chronos job",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Rob Sliwa <robjsliwa@gmail.com>",
+  "license": "MIT"
+}
