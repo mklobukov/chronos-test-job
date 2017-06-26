@@ -1,0 +1,8 @@
+{
+  "version": "1.0.0",
+  "name": "chronostest3",
+  "schedule": "0 * * * *",
+  "repeat": 0,
+  "callback": "http://localhost:3000/mycallback",
+  "check_in_threshold": 240
+}
