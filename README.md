@@ -82,3 +82,32 @@ For example, "@every 1h30m10s" would indicate a schedule that activates immediat
 ## Note
 Chronos takes into consideration time it takes to run a job.  So each scheduled time
 is calculated on initial scheduling and then recalculated after the job is finished.
+
+# Callback Server 
+The callback_server directory contains an example program that gets executed when a job is completed. This program prints job information to the console. This information gets sent to the callback server in the body of a POST request. 
+```
+
+func jobCallbackMethod(w http.ResponseWriter, req *http.Request) {
+	params := mux.Vars(req)
+	paramsID := params["id"]
+
+	var jobInfo CallbackPostRequestBody
+	if err := json.NewDecoder(req.Body).Decode(&jobInfo); err != nil {
+		fmt.Println("Error decoding JSON: ", err)
+		return
+	}
+
+	fmt.Printf("Received job completion at: %v\n", time.Now())
+	fmt.Printf("Params ID: %s\n", paramsID)
+	fmt.Printf("Job ID: %s\nJob Name: %s\nJob Container ID: %s\nJob Instance ID: %s\n",
+						jobInfo.JobID, jobInfo.JobName, jobInfo.JobContainerID, jobInfo.JobInstanceID)
+	fmt.Printf("State: %d\nStatus: %d\nStatus Description: %s\n",
+						jobInfo.State, jobInfo.Status, jobInfo.StatusDescription)
+}
+
+func main() {
+	router := mux.NewRouter()
+	router.HandleFunc("/jobcallback/{id}", jobCallbackMethod).Methods("POST")
+	log.Fatal(http.ListenAndServe(":3007", router))
+}
+```
