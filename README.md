@@ -111,3 +111,4 @@ func main() {
 	log.Fatal(http.ListenAndServe(":3007", router))
 }
 ```
+For the full program with imports and CallbackPostRequestBody struct definition, see `./callback-server/main.go`
