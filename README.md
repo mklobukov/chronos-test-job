@@ -84,7 +84,7 @@ Chronos takes into consideration time it takes to run a job.  So each scheduled 
 is calculated on initial scheduling and then recalculated after the job is finished.
 
 # Callback Server 
-The callback_server directory contains an example program that gets executed when a job is completed. This program prints job information to the console. This information gets sent to the callback server in the body of a POST request. 
+The callback_server directory contains an example program that gets executed when a job is completed. This program prints job information to the console. The information gets sent to the callback server in the body of a POST request. 
 
 ```go
 func jobCallbackMethod(w http.ResponseWriter, req *http.Request) {
