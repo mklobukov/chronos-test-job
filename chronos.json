@@ -4,5 +4,6 @@
   "schedule": "0 * * * *",
   "repeat": 0,
   "callback": "http://localhost:3007/jobcallback/uno",
-  "check_in_threshold": 240
+  "check_in_threshold": 240,
+  "arguments": "{test_args: {arg1, arg2}}"
 }

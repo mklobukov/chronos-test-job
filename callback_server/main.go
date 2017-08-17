@@ -30,6 +30,9 @@ func jobCallbackMethod(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
+	//DELETE THIS later
+	fmt.Println("job info: ", jobInfo)
+
 	fmt.Printf("Received job completion at: %v\n", time.Now())
 	fmt.Printf("Params ID: %s\n", paramsID)
 	fmt.Printf("Job ID: %s\nJob Name: %s\nJob Container ID: %s\nJob Instance ID: %s\n",
