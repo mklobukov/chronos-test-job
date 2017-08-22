@@ -10,8 +10,8 @@ const ChronosSDK = require('chronos-sdk');
 const Config = {
   "authManagerURL": "http://localhost:4655",
   "chronosURL": "http://localhost:8080",
-  "appkey": "",
-  "appsecret": ""
+  "appkey": "Hoy47BalhuPb8L+TyiDxnMsF2jnYhzr",
+  "appsecret": "+khl0zmoVNRgKs92uDCNgDEo+9/GQ1qcbWFya3Rlc3QwNDBlYzc4MTVlMmE0YWEyODBlYWRmMDk2OWM4MjFmNA=="
 }
 
 let chronos = new ChronosSDK.Chronos(Config);
