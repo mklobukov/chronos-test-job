@@ -1,24 +1,34 @@
 const ChronosSDK = require('chronos-sdk');
 
-// const Config = {
-//   "authManagerURL": "https://st-irisauth-wcdcc-002.poc.sys.comcast.net",
-//   "chronosURL": "https://st-chronos-asb-001.poc.sys.comcast.net",
-//   "appkey": "",
-//   "appsecret": ""
-// }
-
 const Config = {
-  "authManagerURL": "http://localhost:4655",
-  "chronosURL": "http://localhost:8080",
+  "authManagerURL": "https://st-irisauth-wcdcc-002.poc.sys.comcast.net",
+  "chronosURL": "https://st-chronos-asb-001.poc.sys.comcast.net",
   "appkey": "",
   "appsecret": ""
 }
 
 let chronos = new ChronosSDK.Chronos(Config);
-//const instanceID = chronos.getShortInstanceID()
-const instanceID = "localtest"
-console.log("instanceID: ", instanceID)
+
+//replace this instanceID with an job_instance_id from your DB entries
+//the special value "localtest" will cause Chronos to respond with
+//status 400 - Bad Request instead of a 404
+const instanceID = chronos.getShortInstanceID()
 let counter = 0;
+
+//get arguments from the the job with the given instance ID
+//and initialize the counter value to the argument value
+//In this example, assume the response looks like this:  {counterInit: 200}
+
+chronos.getJobArgs(instanceID)
+.then(response => {
+  console.log("Got arguments: ", response)
+  const parsedResponse = JSON.parse(response)
+  counter = parsedResponse.counterInit !== undefined ? Number(parsedResponse.counterInit) : 0;
+})
+.catch(error => {
+  console.log("Error getting arguments: ", error)
+})
+
 let timeout;
 
 function *reportJobStatus(){
@@ -35,16 +45,6 @@ function runJob(generator) {
 
   let j = generator.next();
   if (j.value === undefined) {
-    //get arguments and display them before exiting
-    //replace this test ID with any instanceID from your mongoDB entries
-    let testInstanceID = "e747d9cd4cfb713a9f912405c4f02770b610aecb61918e0bae53c32195d47425"
-    chronos.getJobArgs(testInstanceID)
-    .then(response => {
-      console.log("Got arguments: ", response)
-    })
-    .catch(error => {
-      console.log("Error getting arguments: ", error)
-    })
     return;
   }
   j.value.then(() => {
